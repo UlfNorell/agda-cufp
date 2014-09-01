@@ -1,0 +1,8 @@
+*.agdai
+.*.sw[a-p]
+.sw[a-p]
+MAlonzo
+.#*
+solutions/Main
+exercises/Lambda
+exercises/Grep
