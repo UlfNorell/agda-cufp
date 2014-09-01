@@ -33,5 +33,5 @@ instance
   ShowExpr : ∀ {Γ} → Show (Expr Γ)
   ShowExpr = ShowBy forgetScope
 
-ShowTerm : ∀ {Γ a} → Show (Term Γ a)
-ShowTerm = ShowBy forgetTypes
+  ShowTerm : ∀ {Γ a} → Show (Term Γ a)
+  ShowTerm = ShowBy forgetTypes
