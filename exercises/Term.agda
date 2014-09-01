@@ -20,13 +20,13 @@ module WellTyped where
 
   Cxt = List (Name × Type)
 
-  data Term : Cxt → Type → Set where
-    var : ∀ {Γ a} (x : Name) (i : (x , a) ∈ Γ) → Term Γ a
-    app : ∀ {Γ a b} (u : Term Γ (a => b)) (v : Term Γ a) →
+  data Term (Γ : Cxt) : Type → Set where
+    var : ∀ {a} (x : Name) (i : (x , a) ∈ Γ) → Term Γ a
+    app : ∀ {a b} (u : Term Γ (a => b)) (v : Term Γ a) →
             Term Γ b
-    lam : ∀ {Γ} x a {b} (v : Term ((x , a) ∷ Γ) b) → Term Γ (a => b)
-    lit : ∀ {Γ} (n : Nat) → Term Γ nat
-    suc : ∀ {Γ} → Term Γ (nat => nat)
+    lam : ∀ x a {b} (v : Term ((x , a) ∷ Γ) b) → Term Γ (a => b)
+    lit : ∀ (n : Nat) → Term Γ nat
+    suc : Term Γ (nat => nat)
 
   open Unchecked renaming (Term to Expr)
 
