@@ -30,9 +30,12 @@ module WellTyped where
 
   open Unchecked renaming (Term to Expr)
 
-  -- Exercise: Define the erasure from well-typed to unchecked terms.
-  postulate
-    forgetTypes : ∀ {Γ a} → Term Γ a → Expr
+  forgetTypes : ∀ {Γ a} → Term Γ a → Expr
+  forgetTypes (var x i)   = var x
+  forgetTypes (app v v₁)  = app (forgetTypes v) (forgetTypes v₁)
+  forgetTypes (lam x a v) = lam x a (forgetTypes v)
+  forgetTypes (lit n)     = lit n
+  forgetTypes suc         = suc
 
 module WellScoped where
 
