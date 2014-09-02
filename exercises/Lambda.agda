@@ -9,6 +9,8 @@ open import Term.Show
 open import Lists
 
 import SECD.Unchecked
+import SECD.StackSafe
+import SECD.TypeSafe
 import SECD.Compiled
 
 open SECD.Unchecked  using (ShowValue)
@@ -37,6 +39,13 @@ runUnchecked s =
   case parseTerm s of
   λ { nothing  → left "parse error"
     ; (just v) → SECD.Unchecked.run v
+    }
+
+runTypeSafe : String → Either String (Σ Type SECD.TypeSafe.Value)
+runTypeSafe s =
+  case parseAndTypeCheck s of
+  λ { (left err) → left (show err)
+    ; (right (a , e)) → right (a , SECD.TypeSafe.run e)
     }
 
 example =

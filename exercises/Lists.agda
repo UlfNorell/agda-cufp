@@ -47,6 +47,10 @@ all₃ : ∀ {A} {P : A → Set} → (∀ x → Dec (P x)) → (xs : List A) →
 all₃ p []       = just []
 all₃ p (x ∷ xs) = allCons (p x) (all₃ p xs)
 
+lookup∈ : ∀ {A : Set} {P : A → Set} {xs x} → All P xs → x ∈ xs → P x
+lookup∈ (p ∷ ps) (zero refl) = p
+lookup∈ (p ∷ ps) (suc i)     = lookup∈ ps i
+
 -- Exercise: Implement the functions below --
 
 postulate forget∈ : ∀ {A} {x : A} {xs} → x ∈ xs → Nat
@@ -54,9 +58,6 @@ postulate forget∈ : ∀ {A} {x : A} {xs} → x ∈ xs → Nat
 
 postulate find : ∀ {A : Set} {{EqA : Eq A}} (x : A) (xs : List A) → Maybe (x ∈ xs)
 -- find x xs = {!!}
-
-postulate lookup∈ : ∀ {A : Set} {P : A → Set} {xs x} → All P xs → x ∈ xs → P x
--- lookup∈ xs i = {!!}
 
 postulate forgetAll : ∀ {A} {P : A → Set} {xs} → All P xs → List (Σ A P)
 -- forgetAll ps = {!!}
