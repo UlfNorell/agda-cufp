@@ -43,4 +43,15 @@
 
 ### Exercises
 
-- TBA
+#### Part I
+
+- `exercises/Part1.agda`: Add function types, lambda and apply to the expression language.
+- `exercises/Lists.agda`: Implement some useful functions on All and Any.
+- Bonus exercise: `exercises/Grep.agda`
+
+#### Part II
+
+- `exercises/SECD/Compiled.agda`: Implement a type-safe version of the compiled SECD machine.
+- Bonus exercise (hard): Implement a version of the SECD machine indexed by
+  term semantics (guaranteeing that it computes the correct value).
+
