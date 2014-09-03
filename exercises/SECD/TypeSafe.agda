@@ -47,8 +47,8 @@ record SECD a : Set where
 
   open Snapshot current public
 
-infix 1 _∣_∣_∣_
-pattern _∣_∣_∣_ s e c d = secd (snapshot s e c) d
+infix 1 _/_/_/_
+pattern _/_/_/_ s e c d = secd (snapshot s e c) d
 
 data StepResult a : Set where
   done  : Value a → StepResult a
@@ -56,31 +56,31 @@ data StepResult a : Set where
 
 step : ∀ {a} → SECD a → StepResult a
 
-step (v ∷ [] ∣ _ ∣ [] ∣ []) = done v
+step (v ∷ [] / _ / [] / []) = done v
 
-step (v ∷ [] ∣ e′ ∣ [] ∣ (snapshot s e c) ∷ d) =
-  next (v ∷ s ∣ e ∣ c ∣ d)
+step (v ∷ [] / e′ / [] / (snapshot s e c) ∷ d) =
+  next (v ∷ s / e / c / d)
 
-step (s ∣ e ∣ term (lit n) ∷ c ∣ d) =
-  next (lit n ∷ s ∣ e ∣ c ∣ d)
+step (s / e / term (lit n) ∷ c / d) =
+  next (lit n ∷ s / e / c / d)
 
-step (s ∣ e ∣ term (var x i) ∷ c ∣ d) =
-  next (lookup∈ e i ∷ s ∣ e ∣ c ∣ d)
+step (s / e / term (var x i) ∷ c / d) =
+  next (lookup∈ e i ∷ s / e / c / d)
 
-step (s ∣ e ∣ term suc ∷ c ∣ d) =
-  next (suc ∷ s ∣ e ∣ c ∣ d)
+step (s / e / term suc ∷ c / d) =
+  next (suc ∷ s / e / c / d)
 
-step (s ∣ e ∣ term (lam x a t) ∷ c ∣ d) =
-  next (closure x e t ∷ s ∣ e ∣ c ∣ d)
+step (s / e / term (lam x a t) ∷ c / d) =
+  next (closure x e t ∷ s / e / c / d)
 
-step (s ∣ e ∣ term (app t₁ t₂) ∷ c ∣ d) =
-  next (s ∣ e ∣ term t₂ ∷ term t₁ ∷ apply ∷ c ∣ d)
+step (s / e / term (app t₁ t₂) ∷ c / d) =
+  next (s / e / term t₂ ∷ term t₁ ∷ apply ∷ c / d)
 
-step (suc ∷ lit n ∷ s ∣ e ∣ apply ∷ c ∣ d) =
-  next (lit (suc n) ∷ s ∣ e ∣ c ∣ d)
+step (suc ∷ lit n ∷ s / e / apply ∷ c / d) =
+  next (lit (suc n) ∷ s / e / c / d)
 
-step (closure x e′ t ∷ v ∷ s ∣ e ∣ apply ∷ c ∣ d) =
-  next ([] ∣ v ∷ e′ ∣ term t ∷ [] ∣ (snapshot s e c) ∷ d)
+step (closure x e′ t ∷ v ∷ s / e / apply ∷ c / d) =
+  next ([] / v ∷ e′ / term t ∷ [] / (snapshot s e c) ∷ d)
 
 {-# NO_TERMINATION_CHECK #-}
 run′ : ∀ {a} → SECD a → Value a
@@ -89,7 +89,7 @@ run′ s with step s
 ... | done v  = v
 
 run : ∀ {a} → Term [] a → Value a
-run t = run′ ([] ∣ [] ∣ term t ∷ [] ∣ [])
+run t = run′ ([] / [] / term t ∷ [] / [])
 
 -- Show instance for values --
 
