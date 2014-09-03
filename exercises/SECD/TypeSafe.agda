@@ -111,6 +111,5 @@ private
 
   showEnv e = showString "[" ∘ showEnv′ e ∘ showString "]"
 
-instance
-  ShowValue : ∀ {a} → Show (Value a)
-  ShowValue = record { showsPrec = showValue }
+ShowValue : ∀ {a} → Show (Value a)
+ShowValue = record { showsPrec = showValue }

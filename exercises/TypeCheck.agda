@@ -65,20 +65,19 @@ parseAndTypeCheck s =
 
 -- Show instance for type errors --
 
-instance
-  ShowTypeError : Show TypeError
-  ShowTypeError = record { showsPrec = λ p →
-    λ { parse-error → showParen (p > 0) $ showString "Parse error"
-      ; (out-of-scope x) → showParen (p > 0) $ showString ("Variable out of scope: " & x)
-      ; (numbers-are-not-functions n v) →
-           showParen (p > 0) $ showString "Cannot apply "
-                             ∘ shows n
-                             ∘ showString " of type nat to argument "
-                             ∘ shows v
-      ; (argument-mismatch {a′ = a′} a f v) →
-           showParen (p > 0) $ showString   "Expected type " ∘ shows a
-                             ∘ showString " instead of " ∘ shows a′
-                             ∘ showString " in the argument " ∘ shows v
-                             ∘ showString " to the function " ∘ shows f
-      } }
+ShowTypeError : Show TypeError
+ShowTypeError = record { showsPrec = λ p →
+  λ { parse-error → showParen (p > 0) $ showString "Parse error"
+    ; (out-of-scope x) → showParen (p > 0) $ showString ("Variable out of scope: " & x)
+    ; (numbers-are-not-functions n v) →
+         showParen (p > 0) $ showString "Cannot apply "
+                           ∘ shows n
+                           ∘ showString " of type nat to argument "
+                           ∘ shows v
+    ; (argument-mismatch {a′ = a′} a f v) →
+         showParen (p > 0) $ showString   "Expected type " ∘ shows a
+                           ∘ showString " instead of " ∘ shows a′
+                           ∘ showString " in the argument " ∘ shows v
+                           ∘ showString " to the function " ∘ shows f
+    } }
 

@@ -84,7 +84,7 @@ step (lit _ ∷ _ ∷ _           ∣ _ ∣ apply ∷ _ ∣ _) = error "apply li
 step (suc ∷ suc ∷ _           ∣ _ ∣ apply ∷ _ ∣ _) = error "apply suc to suc"
 step (suc ∷ closure _ _ _ ∷ _ ∣ _ ∣ apply ∷ _ ∣ _) = error "apply suc to closure"
 
-{-# NON_TERMINATING #-}
+{-# NO_TERMINATION_CHECK #-}
 run′ : SECD → Either String Value
 run′ s with step s
 ... | next s′ = run′ s′
